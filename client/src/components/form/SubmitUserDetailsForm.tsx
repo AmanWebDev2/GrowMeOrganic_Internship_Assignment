@@ -1,50 +1,47 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { User } from "../../pages/home/Home";
 
 interface Props {
-  setUserDetails: React.Dispatch<React.SetStateAction<User>>
+  setUserDetails: React.Dispatch<React.SetStateAction<User>>;
 }
 
-const SubmitUserDetailsForm = ({setUserDetails}:Props): JSX.Element=> {
+const SubmitUserDetailsForm = ({ setUserDetails }: Props): JSX.Element => {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const contactInputRef = useRef<HTMLInputElement>(null);
 
-  const [isError,setIsError] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const handleSubmit=():void=>{
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
     const name = nameInputRef.current?.value;
     const email = emailInputRef.current?.value;
     const contact = Number(contactInputRef.current?.value);
-   
-    if(name && email && contact) {
-      const data:User = {
+
+    if (name && email && contact) {
+      const data: User = {
         name,
         email,
         contact,
-        isMissingDetails: false
-      }
+        isMissingDetails: false,
+      };
       setUserDetails(data);
-    }else {
+    } else {
       setIsError(true);
     }
-    
-  }
+  };
 
   return (
     <>
-      <Card sx={{ maxWidth: 445, margin: "0 auto", minHeight:"60vh" }}>
+      <Card sx={{ maxWidth: 445, margin: "0 auto", minHeight: "60vh" }}>
         <CardContent>
-          <Typography variant="h4" margin={2}>Fill up the given details</Typography>
-          <form>
+          <Typography variant="h4" margin={2}>
+            Fill up the given details
+          </Typography>
+          <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid xs={12} item>
                 <TextField
@@ -63,7 +60,7 @@ const SubmitUserDetailsForm = ({setUserDetails}:Props): JSX.Element=> {
                   type="email"
                   fullWidth
                   required
-                  inputRef = {emailInputRef}
+                  inputRef={emailInputRef}
                 />
               </Grid>
               <Grid xs={12} item>
@@ -77,12 +74,16 @@ const SubmitUserDetailsForm = ({setUserDetails}:Props): JSX.Element=> {
                 />
               </Grid>
               <Grid xs={12} item>
-              <Button variant="contained" size="medium" fullWidth onClick={handleSubmit}>
-                Save
-              </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                >
+                  Save
+                </Button>
+              </Grid>
             </Grid>
-            </Grid>
-           
           </form>
         </CardContent>
       </Card>
