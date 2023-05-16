@@ -11,8 +11,10 @@ function App() {
   useEffect(()=>{
     const data = localStorage.getItem('userDetails');
     if(!data) return;
-    const userDetails = JSON.parse(data);
-    if(!userDetails.isMissingDetails) {
+    // decrypt user data
+    const encryptedUserDetails = JSON.parse(data);
+    const decryptedUserDetails = JSON.parse(atob(encryptedUserDetails));
+    if(!decryptedUserDetails.isMissingDetails) {
       setIsAuthenticated(true);
     } 
   },[]);

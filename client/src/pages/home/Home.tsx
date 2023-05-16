@@ -23,7 +23,9 @@ const Home = () => {
     useEffect(()=>{
         if(!userDetails.isMissingDetails) {
             // save details to local storage
-            window.localStorage.setItem("userDetails",JSON.stringify(userDetails));
+            const stringifyUserData = JSON.stringify(userDetails);
+            const encryptedUserDetails = btoa(stringifyUserData); 
+            window.localStorage.setItem("userDetails",JSON.stringify(encryptedUserDetails));
             // redirect to new page
             navigate('/users')
         }
