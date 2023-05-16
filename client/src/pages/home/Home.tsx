@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import SubmitUserDetailsForm from '../../components/form/SubmitUserDetailsForm'
+import { useNavigate } from "react-router-dom";
 
 export interface User {
     name: string,
@@ -17,12 +18,14 @@ const initialUserDetails:User = {
 
 const Home = () => {
     const [userDetails, setUserDetails] = useState<User>(initialUserDetails);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         if(!userDetails.isMissingDetails) {
             // save details to local storage
             window.localStorage.setItem("userDetails",JSON.stringify(userDetails));
             // redirect to new page
+            navigate('/users')
         }
     },[userDetails]);
 
