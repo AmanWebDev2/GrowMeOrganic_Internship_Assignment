@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SubmitUserDetailsForm from "../../components/form/SubmitUserDetailsForm";
 import { useNavigate } from "react-router-dom";
 import FormAlerter from "../../components/alert/FormAlerter";
+import { isAuth } from "../../auth/isAuthenticated";
 export interface User {
   name: string;
   email: string;
@@ -27,19 +28,13 @@ const Home = () => {
     entries.forEach((entry) => {
       if (entry.entryType == "navigation") {
         const lastSegment = entry.name.split("/").pop();
-        if (lastSegment == "users") {
+        if (lastSegment == "users" && !isAuth()) {
           setShowAlertMsg(true);
           setWarningMessage("must enter their details before accessing the page.");
         }
       }
     });
   }, []);
-
-  useEffect(() => {
-    if (showAlertMsg) {
-      console.log("show alert message");
-    }
-  }, [showAlertMsg]);
 
   useEffect(() => {
     if (!userDetails.isMissingDetails) {
