@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SubmitUserDetailsForm from "../../components/form/SubmitUserDetailsForm";
 import { useNavigate } from "react-router-dom";
+import FormAlerter from "../../components/alert/FormAlerter";
 export interface User {
   name: string;
   email: string;
@@ -18,7 +19,7 @@ const initialUserDetails: User = {
 const Home = () => {
   const [userDetails, setUserDetails] = useState<User>(initialUserDetails);
   const [showAlertMsg, setShowAlertMsg] = useState(false);
-
+  const [warningMessage,setWarningMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const Home = () => {
         const lastSegment = entry.name.split("/").pop();
         if (lastSegment == "users") {
           setShowAlertMsg(true);
+          setWarningMessage("must enter their details before accessing the page.");
         }
       }
     });
@@ -53,8 +55,15 @@ const Home = () => {
     }
   }, [userDetails]);
 
+  const handleClose=():void=>{
+    setShowAlertMsg(false);
+  }
+
   return (
     <div className="home">
+        {
+            showAlertMsg && <FormAlerter message={warningMessage} handleClose={handleClose}/>
+        }
       <SubmitUserDetailsForm setUserDetails={setUserDetails} />
     </div>
   );
