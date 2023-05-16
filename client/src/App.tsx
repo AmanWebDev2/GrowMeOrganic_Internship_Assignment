@@ -1,32 +1,23 @@
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";
-import { useEffect, useState } from "react";
+import { isAuth } from "./auth/isAuthenticated";
 
 function App() {
-
-  const [isAuthenticated,setIsAuthenticated] = useState(false);
-
-  useEffect(()=>{
-    const data = localStorage.getItem('userDetails');
-    if(!data) return;
-    // decrypt user data
-    const encryptedUserDetails = JSON.parse(data);
-    const decryptedUserDetails = JSON.parse(atob(encryptedUserDetails));
-    if(!decryptedUserDetails.isMissingDetails) {
-      setIsAuthenticated(true);
-    } 
-  },[]);
-
   return (
-    <>
     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/users" element={ isAuthenticated ? <Users/> : <>Must enter the details before accessing the page</>} />
+      <Route path="/" element={<Home />} />
+      <Route element={<PrivateRoutes/>}>
+        <Route path="/users" element={<Users />} />
+      </Route>
     </Routes>
-    </>
   );
 }
+
+const PrivateRoutes = () => {
+  const isAuthenticated = isAuth();
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+};
 
 export default App;
