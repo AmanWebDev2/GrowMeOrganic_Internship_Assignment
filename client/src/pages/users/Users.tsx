@@ -16,8 +16,8 @@ const rows: GridRowsProp = [
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 150 },
   { field: "userId", headerName: "User ID",width:150, },
-  { field: "title", headerName: "Title",minWidth:150,flex:1},
-  { field: "body", headerName: "Body",width:650,flex:1},
+  { field: "title", headerName: "Title",width:550 },
+  { field: "body", headerName: "Body",width:650},
 ];
 
 const defaultUser: UserInterface[] = [];
