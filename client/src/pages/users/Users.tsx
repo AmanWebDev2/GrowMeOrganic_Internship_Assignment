@@ -24,12 +24,15 @@ const defaultUser: UserInterface[] = [];
 
 const Users = () => {
   const [users, setUsers] = useState<UserInterface[]>(defaultUser);
+  const [loading, setloading] = useState<boolean>(true);
   useEffect(() => {
     (async () => {
       const data = await getUsers();
       if (data != undefined) {
         setUsers(data);
+        setloading(false);
       }
+      setloading(false);
     })();
   }, []);
 
@@ -40,6 +43,7 @@ const Users = () => {
           <DataGrid
             rows={users.length > 0 ? users : rows}
             columns={columns}
+            loading={loading}
             initialState={{
               pagination: {
                 paginationModel: {
