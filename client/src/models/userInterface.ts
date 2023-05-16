@@ -1,6 +1,6 @@
 export interface UserInterface {
-    userId: number,
-    id: number,
-    title: string,
-    body: string
+    userId: number | null,
+    id: number | null,
+    title: string | null,
+    body: string | null
 }
