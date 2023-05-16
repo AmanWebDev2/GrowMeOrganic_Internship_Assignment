@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUsers } from "../../api/getUsers";
+import { UserInterface } from "../../models/userInterface";
 
 const Users = () => {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState<UserInterface | null>(null);
+  
   useEffect(() => {
-    async () => {
+    (async()=>{
       const data = await getUsers();
-      setUsers(data);
-    };
+      if(data != undefined) {
+        setUsers(data);
+      }
+    })()
   }, []);
 
-  useEffect(()=>{
-    console.log(users);
-  },[users]);
   return <div>Users</div>;
 };
 
