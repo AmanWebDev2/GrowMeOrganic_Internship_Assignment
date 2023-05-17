@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import SubmitUserDetailsForm from "../../components/form/SubmitUserDetailsForm";
+import SubmitUserDetailsForm from "../../components/Form/SubmitUserDetailsForm";
 import { useNavigate } from "react-router-dom";
-import FormAlerter from "../../components/alert/FormAlerter";
+import FormAlerter from "../../components/Alert/FormAlerter";
 import { isAuth } from "../../auth/isAuthenticated";
 import { saveToLocalStorage } from "../../utils/saveToLocalStorage";
 export interface User {

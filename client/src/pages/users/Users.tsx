@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridColDef,
-  GridRowsProp,
-} from "@mui/x-data-grid";
+import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { getUsers } from "../../api/getUsers";
 import { UserInterface } from "../../models/userInterface";
 import { Box, Container } from "@mui/material";
+import UsersTable from "../../components/Table/UsersTable";
 
 const rows: GridRowsProp = [
   { id: "null", userId: "null", title: "No data found", body: "" },
@@ -14,9 +11,9 @@ const rows: GridRowsProp = [
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 150 },
-  { field: "userId", headerName: "User ID",width:150, },
-  { field: "title", headerName: "Title",width:550 },
-  { field: "body", headerName: "Body",width:650},
+  { field: "userId", headerName: "User ID", width: 150 },
+  { field: "title", headerName: "Title", width: 550 },
+  { field: "body", headerName: "Body", width: 650 },
 ];
 
 const defaultUser: UserInterface[] = [];
@@ -39,19 +36,11 @@ const Users = () => {
     <>
       <Container>
         <Box sx={{ height: 580, width: "100%" }}>
-          <DataGrid
-            rows={users.length > 0 ? users : rows}
+          <UsersTable
             columns={columns}
+            defaultRow={rows}
             loading={loading}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            disableRowSelectionOnClick
+            users={users}
           />
         </Box>
       </Container>
