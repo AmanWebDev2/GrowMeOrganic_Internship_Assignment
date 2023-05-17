@@ -3,8 +3,14 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { formatDepartmentJSON } from "../Department/formatDepartmentJSON";
-import { FormattedDepartment, FormattedSubDepartment } from "../../models/formattedDepartmentInterface";
+import {
+  FormattedDepartment,
+  FormattedSubDepartment,
+} from "../../models/formattedDepartmentInterface";
 import { DepartmentInterface } from "../../models/departmentInterface";
+import { Collapse, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 interface PropsType {
   departmentsDetail: DepartmentInterface[];
@@ -28,7 +34,9 @@ const defaultDepartment: FormattedDepartment[] = [
 
 export default function IndeterminateCheckbox(props: PropsType) {
   const { departmentsDetail } = props;
-  const [departmentList, setDepartmentList] = useState<FormattedDepartment[]>(defaultDepartment);
+  const [departmentList, setDepartmentList] =
+    useState<FormattedDepartment[]>(defaultDepartment);
+  const [open, setOpen] = useState(0);
 
   useEffect(() => {
     const formattedList = formatDepartmentJSON(departmentsDetail);
@@ -39,10 +47,10 @@ export default function IndeterminateCheckbox(props: PropsType) {
     console.log(departmentList);
   }, [departmentList]);
 
-  const shouldIndeterminatedChecked = (subDepartment:FormattedSubDepartment[]) => {
-      return subDepartment.some(
-        (list) => list.checked
-      );
+  const shouldIndeterminatedChecked = (
+    subDepartment: FormattedSubDepartment[]
+  ) => {
+    return subDepartment.some((list) => list.checked);
   };
 
   const handleDepartmentCheckBox = (
@@ -54,7 +62,8 @@ export default function IndeterminateCheckbox(props: PropsType) {
       setDepartmentList((prevDepartments) => {
         const updatedDepartments = [...prevDepartments];
         updatedDepartments[departmentIndex].department.checked = true;
-        updatedDepartments[departmentIndex].department.indeterminateChecked = false;
+        updatedDepartments[departmentIndex].department.indeterminateChecked =
+          false;
 
         // If the department checkbox is checked, update all sub-departments
         if (departmentIndex >= 0) {
@@ -84,7 +93,9 @@ export default function IndeterminateCheckbox(props: PropsType) {
     }
   };
 
-  const isAllSubDepartmentsChecked = (sub_departments:FormattedSubDepartment[]) => {
+  const isAllSubDepartmentsChecked = (
+    sub_departments: FormattedSubDepartment[]
+  ) => {
     for (const subDepartment of sub_departments) {
       if (!subDepartment.checked) {
         return false; // Return false if any sub-department is not checked
@@ -111,7 +122,11 @@ export default function IndeterminateCheckbox(props: PropsType) {
         updatedDepartments[departmentIndex].department.checked = true;
         updatedDepartments[departmentIndex].department.indeterminateChecked =
           false;
-      } else if (shouldIndeterminatedChecked(updatedDepartments[departmentIndex].sub_departments)) {
+      } else if (
+        shouldIndeterminatedChecked(
+          updatedDepartments[departmentIndex].sub_departments
+        )
+      ) {
         updatedDepartments[departmentIndex].department.checked = false;
         updatedDepartments[departmentIndex].department.indeterminateChecked =
           true;
@@ -127,7 +142,11 @@ export default function IndeterminateCheckbox(props: PropsType) {
         subDepartmentIndex
       ].checked = false;
       // check for if all sub department is checked or not
-      if (shouldIndeterminatedChecked(updatedDepartments[departmentIndex].sub_departments)) {
+      if (
+        shouldIndeterminatedChecked(
+          updatedDepartments[departmentIndex].sub_departments
+        )
+      ) {
         updatedDepartments[departmentIndex].department.checked = false;
         updatedDepartments[departmentIndex].department.indeterminateChecked =
           true;
@@ -146,18 +165,25 @@ export default function IndeterminateCheckbox(props: PropsType) {
           return (
             <React.Fragment key={departmentIndex}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <FormControlLabel
-                  label={data.department.name}
-                  control={
-                    <Checkbox
-                      checked={data.department.checked}
-                      indeterminate={data.department.indeterminateChecked}
-                      onChange={(e) =>
-                        handleDepartmentCheckBox(e, departmentIndex)
-                      }
-                    />
-                  }
-                />
+                <Box sx={{ display: "flex" }}>
+                  <IconButton onClick={()=>setOpen(open == departmentIndex ? -1 : departmentIndex )}>
+                    {open !== departmentIndex ? <AddIcon /> : <RemoveIcon />}
+                  </IconButton>
+                  <FormControlLabel
+                    label={data.department.name}
+                    control={
+                      <Checkbox
+                        checked={data.department.checked}
+                        indeterminate={data.department.indeterminateChecked}
+                        onChange={(e) =>
+                          handleDepartmentCheckBox(e, departmentIndex)
+                        }
+                      />
+                    }
+                  />
+                </Box>
+                <Collapse in={open == departmentIndex}>
+
                 {data.sub_departments.map(
                   (subDepartment, subDepartmentIndex: number) => {
                     return (
@@ -166,7 +192,7 @@ export default function IndeterminateCheckbox(props: PropsType) {
                           sx={{
                             display: "flex",
                             flexDirection: "column",
-                            ml: 3,
+                            ml: 10,
                           }}
                         >
                           <FormControlLabel
@@ -189,6 +215,8 @@ export default function IndeterminateCheckbox(props: PropsType) {
                     );
                   }
                 )}
+                </Collapse>
+
               </Box>
             </React.Fragment>
           );
