@@ -3,7 +3,6 @@ import {
   DataGrid,
   GridColDef,
   GridRowsProp,
-  GridValidRowModel,
 } from "@mui/x-data-grid";
 import { getUsers } from "../../api/getUsers";
 import { UserInterface } from "../../models/userInterface";

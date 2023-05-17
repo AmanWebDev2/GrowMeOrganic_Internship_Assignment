@@ -3,6 +3,7 @@ import SubmitUserDetailsForm from "../../components/form/SubmitUserDetailsForm";
 import { useNavigate } from "react-router-dom";
 import FormAlerter from "../../components/alert/FormAlerter";
 import { isAuth } from "../../auth/isAuthenticated";
+import { saveToLocalStorage } from "../../utils/saveToLocalStorage";
 export interface User {
   name: string;
   email: string;
@@ -36,30 +37,24 @@ const Home = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!userDetails.isMissingDetails) {
-      // save details to local storage
-      const stringifyUserData = JSON.stringify(userDetails);
-      const encryptedUserDetails = btoa(stringifyUserData);
-      window.localStorage.setItem(
-        "userDetails",
-        JSON.stringify(encryptedUserDetails)
-      );
-      // redirect to new page
-      navigate("/users", { replace: true });
-    }
-  }, [userDetails]);
-
   const handleClose=():void=>{
     setShowAlertMsg(false);
+  }
+
+  const handleSubmission=(formData:User)=>{
+    if(!formData.isMissingDetails) {
+      setUserDetails(userDetails);
+      saveToLocalStorage("userDetails",formData);
+      navigate("/users", { replace: true });
+    }
   }
 
   return (
     <div className="home">
         {
-            showAlertMsg && <FormAlerter message={warningMessage} handleClose={handleClose}/>
+          showAlertMsg && <FormAlerter message={warningMessage} handleClose={handleClose}/>
         }
-      <SubmitUserDetailsForm setUserDetails={setUserDetails} />
+      <SubmitUserDetailsForm handleSubmission={handleSubmission}/>
     </div>
   );
 };

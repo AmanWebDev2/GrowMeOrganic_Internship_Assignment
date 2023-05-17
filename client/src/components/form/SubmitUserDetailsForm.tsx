@@ -5,15 +5,14 @@ import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { User } from "../../pages/home/Home";
 
 interface Props {
-  setUserDetails: React.Dispatch<React.SetStateAction<User>>;
+  handleSubmission: (data:User)=>void
 }
 
-const SubmitUserDetailsForm = ({ setUserDetails }: Props): JSX.Element => {
+const SubmitUserDetailsForm = ({handleSubmission }: Props): JSX.Element => {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const contactInputRef = useRef<HTMLInputElement>(null);
 
-  const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -28,9 +27,7 @@ const SubmitUserDetailsForm = ({ setUserDetails }: Props): JSX.Element => {
         contact,
         isMissingDetails: false,
       };
-      setUserDetails(data);
-    } else {
-      setIsError(true);
+      handleSubmission(data);
     }
   };
 
