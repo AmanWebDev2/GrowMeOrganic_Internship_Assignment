@@ -22,6 +22,7 @@ const defaultDepartment: FormattedDepartment[] = [
       name: "default",
       checked: false,
       indeterminateChecked: false,
+      expanded: false,
     },
     sub_departments: [
       {
@@ -36,16 +37,11 @@ export default function IndeterminateCheckbox(props: PropsType) {
   const { departmentsDetail } = props;
   const [departmentList, setDepartmentList] =
     useState<FormattedDepartment[]>(defaultDepartment);
-  const [open, setOpen] = useState(0);
 
   useEffect(() => {
     const formattedList = formatDepartmentJSON(departmentsDetail);
     setDepartmentList(formattedList);
   }, [departmentsDetail]);
-
-  useEffect(() => {
-    console.log(departmentList);
-  }, [departmentList]);
 
   const shouldIndeterminatedChecked = (
     subDepartment: FormattedSubDepartment[]
@@ -56,7 +52,7 @@ export default function IndeterminateCheckbox(props: PropsType) {
   const handleDepartmentCheckBox = (
     event: React.ChangeEvent<HTMLInputElement>,
     departmentIndex: number
-  ) => {
+  ): void => {
     const checked = event.target.checked;
     if (checked) {
       setDepartmentList((prevDepartments) => {
@@ -95,7 +91,7 @@ export default function IndeterminateCheckbox(props: PropsType) {
 
   const isAllSubDepartmentsChecked = (
     sub_departments: FormattedSubDepartment[]
-  ) => {
+  ): boolean => {
     for (const subDepartment of sub_departments) {
       if (!subDepartment.checked) {
         return false; // Return false if any sub-department is not checked
@@ -108,7 +104,7 @@ export default function IndeterminateCheckbox(props: PropsType) {
     event: React.ChangeEvent<HTMLInputElement>,
     departmentIndex: number,
     subDepartmentIndex: number
-  ) => {
+  ): void => {
     if (event.target.checked) {
       const updatedDepartments = [...departmentList];
       updatedDepartments[departmentIndex].sub_departments[
@@ -158,6 +154,14 @@ export default function IndeterminateCheckbox(props: PropsType) {
     }
   };
 
+  const handleCollapse=(departmentIndex:number):void=>{
+    setDepartmentList((prevDepartment)=>{
+      const updatedDepartments = [...prevDepartment];
+      updatedDepartments[departmentIndex].department.expanded = !(updatedDepartments[departmentIndex].department.expanded);
+      return updatedDepartments;
+    })
+  }
+
   return (
     <div>
       {departmentList &&
@@ -166,8 +170,8 @@ export default function IndeterminateCheckbox(props: PropsType) {
             <React.Fragment key={departmentIndex}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ display: "flex" }}>
-                  <IconButton onClick={()=>setOpen(open == departmentIndex ? -1 : departmentIndex )}>
-                    {open !== departmentIndex ? <AddIcon /> : <RemoveIcon />}
+                  <IconButton onClick={()=>handleCollapse(departmentIndex)}>
+                    { !data.department.expanded ? <AddIcon /> : <RemoveIcon />}
                   </IconButton>
                   <FormControlLabel
                     label={data.department.name}
@@ -182,7 +186,7 @@ export default function IndeterminateCheckbox(props: PropsType) {
                     }
                   />
                 </Box>
-                <Collapse in={open == departmentIndex}>
+                <Collapse in={data.department.expanded}>
 
                 {data.sub_departments.map(
                   (subDepartment, subDepartmentIndex: number) => {

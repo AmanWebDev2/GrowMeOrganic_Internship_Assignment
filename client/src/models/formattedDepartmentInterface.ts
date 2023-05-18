@@ -3,7 +3,8 @@ export interface FormattedDepartment
     department: {
       name: string;
       checked: boolean;
-      indeterminateChecked: boolean
+      indeterminateChecked: boolean,
+      expanded: boolean
     },
     sub_departments: FormattedSubDepartment[];
 }
