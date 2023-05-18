@@ -6,8 +6,8 @@ import { formatDepartmentJSON } from "../Department/formatDepartmentJSON";
 import {
   FormattedDepartment,
   FormattedSubDepartment,
-} from "../../models/formattedDepartmentInterface";
-import { DepartmentInterface } from "../../models/departmentInterface";
+} from "../../interfaces/formattedDepartmentInterface";
+import { DepartmentInterface } from "../../interfaces/DepartmentInterface";
 import { Collapse, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";

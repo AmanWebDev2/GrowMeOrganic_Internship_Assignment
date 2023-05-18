@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/home/Home";
-import Users from "./pages/users/Users";
+import Home from "./pages/Home/Home";
+import Users from "./pages/Users/Users";
 import { isAuth } from "./auth/isAuthenticated";
 
 function App() {

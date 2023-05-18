@@ -1,4 +1,4 @@
-import { UserInterface } from "../models/userInterface";
+import { UserInterface } from "../interfaces/UserInterface";
 
 export const getUsers = async():Promise<UserInterface[] | undefined> => {
     try {

@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { UserInterface } from "../../models/userInterface";
+import { UserInterface } from "../../interfaces/UserInterface";
 
 interface Props {
   users: UserInterface[];

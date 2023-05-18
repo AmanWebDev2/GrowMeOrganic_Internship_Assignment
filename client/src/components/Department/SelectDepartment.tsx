@@ -1,4 +1,4 @@
-import { DepartmentInterface } from '../../models/departmentInterface';
+import { DepartmentInterface } from '../../interfaces/DepartmentInterface';
 import IndeterminateCheckbox from '../CheckBox/IndeterminateCheckBox'
 
 interface PropsType {

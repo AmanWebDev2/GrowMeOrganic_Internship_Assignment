@@ -1,4 +1,4 @@
-import { DepartmentInterface } from "../../models/departmentInterface";
+import { DepartmentInterface } from "../../interfaces/DepartmentInterface";
 
 export const formatDepartmentJSON = (data: DepartmentInterface[]) => {
     if (data.length === 0) return [];

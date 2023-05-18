@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { getUsers } from "../../api/getUsers";
-import { UserInterface } from "../../models/userInterface";
+import { UserInterface } from "../../interfaces/UserInterface";
 import { Box, Container, Typography } from "@mui/material";
 import UsersTable from "../../components/Table/UsersTable";
 import SelectDepartment from "../../components/Department/SelectDepartment";
 import DepartmentData from "../../data/departmentList.json";
 import RedirectButton from "../../components/Button/RedirectButton";
-import { DepartmentInterface } from "../../models/departmentInterface";
+import { DepartmentInterface } from "../../interfaces/DepartmentInterface";
 
 const departments:DepartmentInterface[] = DepartmentData;
 

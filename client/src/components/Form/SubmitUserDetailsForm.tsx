@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
-import { User } from "../../pages/home/Home";
+import { User } from "../../pages/Home/Home";
 
 interface Props {
   handleSubmission: (data:User)=>void
