@@ -31,7 +31,7 @@ const Home = () => {
         const lastSegment = entry.name.split("/").pop();
         if (lastSegment == "users" && !isAuth()) {
           setShowAlertMsg(true);
-          setWarningMessage("must enter their details before accessing the page.");
+          setWarningMessage("must enter the details before accessing the page.");
         }
       }
     });
