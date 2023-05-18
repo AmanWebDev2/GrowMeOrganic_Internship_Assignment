@@ -40,7 +40,7 @@ const Users = () => {
 
   return (
     <>
-      <Container>
+      <Container sx ={{background:'#f8f8f8', padding:'1rem',borderRadius:2}}>
         <Box sx={{display:'flex',alignItems:'center' ,justifyContent:'end'}}>
         <RedirectButton name="Home" redirectionURL="/" />
         </Box>
