@@ -1,8 +1,4 @@
 export interface DepartmentInterface {
     department: string,
-    sub_department: SubDepartmentInterface[]
-}
-
-interface SubDepartmentInterface {
-    sub_departments: string[] 
+    sub_departments: string[]
 }

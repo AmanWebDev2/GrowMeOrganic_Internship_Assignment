@@ -1,8 +1,8 @@
-import React from 'react'
+import { DepartmentInterface } from '../../models/departmentInterface';
 import IndeterminateCheckbox from '../CheckBox/IndeterminateCheckBox'
 
 interface PropsType {
-  departmentsDetail: any
+  departmentsDetail: DepartmentInterface[]
 }
 
 const SelectDepartment = (props:PropsType) => {

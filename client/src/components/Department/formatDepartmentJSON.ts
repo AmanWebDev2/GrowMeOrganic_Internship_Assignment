@@ -1,4 +1,6 @@
-export const formatDepartmentJSON = (data: any[]) => {
+import { DepartmentInterface } from "../../models/departmentInterface";
+
+export const formatDepartmentJSON = (data: DepartmentInterface[]) => {
     if (data.length === 0) return [];
     
     return data.map(d => ({
